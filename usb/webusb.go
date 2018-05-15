@@ -65,8 +65,11 @@ func (b *WebUSB) Enumerate() ([]Info, error) {
 
 	var infos []Info
 
-	// There is a bug in either Trezor T or libusb that makes
-	// device appear twice with the same path
+	// There is a bug in libusb that makes
+	// device appear twice with the same path.
+	// This is already fixed in libusb 2.0.12;
+	// however, 2.0.12 has other problems with windows, so we
+	// patchfix it here
 	paths := make(map[string]bool)
 
 	for _, dev := range list {
